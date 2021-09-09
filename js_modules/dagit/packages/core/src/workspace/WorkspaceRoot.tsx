@@ -8,6 +8,7 @@ import {ScheduleRoot} from '../schedules/ScheduleRoot';
 import {SensorRoot} from '../sensors/SensorRoot';
 import {MainContent} from '../ui/MainContent';
 
+import {AssetGraphRoot} from './AssetGraphRoot';
 import {GraphRoot} from './GraphRoot';
 import {WorkspaceContext} from './WorkspaceContext';
 import {WorkspaceOverviewRoot} from './WorkspaceOverviewRoot';
@@ -104,6 +105,22 @@ const RepoRouteContainer: React.FC<{repoPath: string}> = (props) => {
         render={(props: RouteComponentProps<{sensorName: string}>) => (
           <SensorRoot sensorName={props.match.params.sensorName} repoAddress={addressForPath} />
         )}
+      />
+      <Route
+        path="/workspace/:repoPath/assets(/?.*)"
+        render={(props) => {
+          return (
+            <AssetGraphRoot
+              {...props}
+              repoAddress={addressForPath}
+              selected={
+                props.match.params[0]
+                  ? JSON.stringify(props.match.params[0].split('/').map(decodeURIComponent))
+                  : undefined
+              }
+            />
+          );
+        }}
       />
       <Route
         path="/workspace/:repoPath/:tab?"

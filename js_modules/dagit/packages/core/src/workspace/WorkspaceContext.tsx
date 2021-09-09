@@ -76,6 +76,12 @@ const ROOT_REPOSITORIES_QUERY = gql`
                   mode
                   pipelineName
                 }
+                assetNodes {
+                  id
+                  assetKey {
+                    path
+                  }
+                }
                 ...RepositoryInfoFragment
               }
             }

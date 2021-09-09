@@ -45,6 +45,8 @@ export const WorkspaceOverviewRoot = () => {
       );
     }
 
+    const hasAssets = options.some((option) => !!option.repository.assetNodes.length);
+
     return (
       <Table>
         <thead>
@@ -59,6 +61,7 @@ export const WorkspaceOverviewRoot = () => {
               <th>Pipelines</th>
             )}
             <th>{flagPipelineModeTuples ? 'Ops' : 'Solids'}</th>
+            {hasAssets ? <th>Assets</th> : null}
             <th>Schedules</th>
             <th>Sensors</th>
           </tr>
@@ -94,6 +97,11 @@ export const WorkspaceOverviewRoot = () => {
                     {flagPipelineModeTuples ? 'Ops' : 'Solids'}
                   </Link>
                 </td>
+                {hasAssets ? (
+                  <td>
+                    <Link to={workspacePath(name, location, '/assets')}>Assets</Link>
+                  </td>
+                ) : null}
                 <td>
                   <Link to={workspacePath(name, location, '/schedules')}>Schedules</Link>
                 </td>
