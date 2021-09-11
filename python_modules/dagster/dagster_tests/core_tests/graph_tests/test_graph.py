@@ -619,7 +619,7 @@ def test_job_subset():
     assert isinstance(the_job.get_pipeline_subset_def({"my_op"}), PipelineSubsetDefinition)
 
 
-def test_result_for_node_non_standard_name():
+def test_output_for_node_non_standard_name():
     @op(out={"foo": Out()})
     def my_op():
         return 5
