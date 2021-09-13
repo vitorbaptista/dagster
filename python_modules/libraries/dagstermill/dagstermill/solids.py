@@ -290,16 +290,16 @@ def _dm_solid_compute(
 
 
 def define_dagstermill_solid(
-    name,
-    notebook_path,
-    input_defs=None,
-    output_defs=None,
-    config_schema=None,
-    required_resource_keys=None,
-    output_notebook=None,
-    asset_key_prefix=None,
-    description=None,
-    tags=None,
+    name: str,
+    notebook_path: str,
+    input_defs: Optional[Sequence[InputDefinition]] = None,
+    output_defs: Optional[Sequence[OutputDefinition]] = None,
+    config_schema: Optional[Union[Any, Dict[str, Any]]] = None,
+    required_resource_keys: Optional[Set[str]] = None,
+    output_notebook: Optional[str] = None,
+    asset_key_prefix: Optional[Union[List[str], str]] = None,
+    description: Optional[str] = None,
+    tags: Optional[Dict[str, Any]] = None,
 ):
     """Wrap a Jupyter notebook in a solid.
 
@@ -387,7 +387,7 @@ def define_dagstermill_op(
     config_schema: Optional[Union[Any, Dict[str, Any]]] = None,
     required_resource_keys: Optional[Set[str]] = None,
     output_notebook: Optional[str] = None,
-    asset_key_prefix: Optional[str] = None,
+    asset_key_prefix: Optional[Union[List[str], str]] = None,
     description: Optional[str] = None,
     tags: Optional[Dict[str, Any]] = None,
 ):
