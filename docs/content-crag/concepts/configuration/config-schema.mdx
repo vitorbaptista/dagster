@@ -52,15 +52,15 @@ Default run config can be provided when defining a job using the `run_config` pa
 
 ```python file=/concepts/configuration/execute_with_config.py startafter=start_define_job_with_config endbefore=end_define_job_with_config
 config_example_job = config_example.to_job(
-        run_config={"ops": {"config_example": {"config": {"iterations": 1}}}}
+        config={"ops": {"uses_config": {"config": {"iterations": 1}}}}
     )
 ```
 
 When executing a job with <PyObject module="dagster" object="JobDefinition" method="execute_in_process"/>, you can specify the config values through `run_config` argument:
 
 ```python file=/concepts/configuration/execute_with_config.py startafter=start_execute_with_config endbefore=end_execute_with_config
-result = config_example.execute_in_process(
-        run_config={"ops": {"config_example": {"config": {"iterations": 1}}}}
+result = config_example.to_job().execute_in_process(
+        run_config={"ops": {"uses_config": {"config": {"iterations": 1}}}}
     )
 ```
 
@@ -125,7 +125,7 @@ def nests_configurable():
 Dagster validates the `run_config` against the `config_schema`. If the values violate the schema, it will fail at execution time. For example, the following will raise a <PyObject module="dagster" object="DagsterInvalidConfigError" />:
 
 ```python file=/concepts/configuration/execute_with_config.py startafter=start_execute_with_bad_config endbefore=end_execute_with_bad_config
-result = nests_configurable.execute_in_process(
+result = nests_configurable.to_job().execute_in_process(
         run_config={
             "ops": {"configurable_with_schema": {"config": {"nonexistent_config_value": 1}}}
         }
@@ -163,7 +163,7 @@ If you want multiple ops to share values, You can use <PyObject module="dagster"
 It defaults to <PyObject module="dagster" object="Any" /> type, meaning Dagster will accept any config value provided for the resource:
 
 ```python file=/concepts/configuration/make_values_resource_any.py
-from dagster import make_values_resource, op, graph
+from dagster import graph, make_values_resource, op
 
 
 @op(required_resource_keys={"value"})
@@ -192,7 +192,7 @@ basic_result = basic_job.execute_in_process(
 You can also specify the schema of the values like:
 
 ```python file=/concepts/configuration/make_values_resource_config_schema.py
-from dagster import make_values_resource, graph, op
+from dagster import graph, make_values_resource, op
 
 
 @op(required_resource_keys={"values"})
