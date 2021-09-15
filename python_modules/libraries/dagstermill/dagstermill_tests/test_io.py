@@ -43,7 +43,7 @@ def test_yes_output_notebook_yes_file_manager():
 
 def test_yes_output_notebook_no_file_manager():
     with pytest.raises(
-        DagsterInvalidDefinitionError, match='Resource key "file_manager" is required'
+        DagsterInvalidDefinitionError, match='resource key "file_manager" is required'
     ):
 
         @pipeline
